@@ -6,21 +6,16 @@
 
 /* Estrutura de um superbloco */
 struct superBloco {
-    // tamanho de cada bloco
-    int tamanho_bloco;
-    // numero total de blocos
-    int numero_blocos;
-    // quantidade de blocos livres
-    int blocos_livres;
+    int tamanho_bloco; // tamanho de cada bloco
+    int numero_blocos; // numero total de blocos
+    int blocos_livres; // quantidade de blocos livres
 };
 
-/* Funcao que inicia o arquivo */
-void start(FILE* file){
-    struct superBloco b;
-    
-    b.tamanho_bloco = SIZE_BLOCO;
-    b.numero_blocos = QNTD_BLOCO;
-    b.blocos_livres = QNTD_BLOCO;
-
-    printf("Tamanho Bloco: %d\nNumero de blocos: %d\nBlocos livres: %d\n", b.tamanho_bloco, b.numero_blocos, b.blocos_livres);
+/* Estrutura do bloco */
+struct Bloco{
+    char* nome;                         // nome
+    char* identificacao;                // identificacao: "D": Diretorio e "A": Arquivo
+    struct Bloco* diretorio_anterior;   // contem ponteiro para o diretorio anterior
+    struct Bloco* subdiretorios;        // contem os subdiretorios
+    struct Bloco* proxima_particao;     // contem o ponteiro das particoes
 };

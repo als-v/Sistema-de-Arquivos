@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "src/estructures.h"
+#include "src/estructures.c"
 
 int main(){
     FILE* arquivo;
