@@ -62,23 +62,29 @@ int execucao(char str[MAX_LINE/2 + 1], struct comando *historico, int* histIndex
     if(!pid) { /* se for o processo filho, executa o comando solicitado */
         int disco = 0; /* indica com qual disco está mexendo: 0 - real 1 - simulado */
         char teste[5];
-        if(strcmp(args[0], "cd") || strcmp(args[0], "mkdir")){
+        if(strcmp(args[0], "mkdir")){
             strncpy(teste, args[1], 4);
             teste[4] = '\0';
             if(strcmp(teste, "/dsc")){
-                disco = 1; /* indica que se trata do disco simulado */
-            }
-        } if(strcmp(args[0], "rm") || strcmp(args[0], "cp") || strcmp(args[0], "mv") || strcmp(args[0], "ls")) {
-            strncpy(teste, args[2], 4);
-            teste[4] = '\0';
-            if(strcmp(teste, "/dsc")){
-                disco = 1; /* indica que se trata do disco simulado */
+                int disco = 1; /* Indica que se trata do disco simulado */
+                /* Implementa o mkdir no disco simulado */
             }
         }
+        // if(strcmp(args[0], "cd") || strcmp(args[0], "mkdir")){
+        //     strncpy(teste, args[1], 4);
+        //     teste[4] = '\0';
+        //     if(strcmp(teste, "/dsc")){
+        //         disco = 1; /* indica que se trata do disco simulado */
+        //     }
+        // } if(strcmp(args[0], "rm") || strcmp(args[0], "cp") || strcmp(args[0], "mv") || strcmp(args[0], "ls")) {
+        //     strncpy(teste, args[2], 4);
+        //     teste[4] = '\0';
+        //     if(strcmp(teste, "/dsc")){
+        //         disco = 1; /* indica que se trata do disco simulado */
+        //     }
+        // }
         if(disco == 0){
             execvp(args[0], args); /* executa o comando no disco real */
-        } else {
-            /** IMPLEMENTA OS COMANDOS PARA O DISCO SIMULADO **/
         }
 
     } else {
