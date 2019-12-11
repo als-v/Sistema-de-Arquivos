@@ -1,36 +1,33 @@
+#include <unistd.h>
 #include "estruturas/structures.h"
 #include "funcoes/funct.h"
 
 void start(FILE* file){
     struct fileSistem* fileSistem;
-
+    struct Bloco* b;
     fileSistem = start_file_sistem(file);
 
     if (fileSistem == NULL){
         printf("Erro ao criar o sistema de arquivos!!\n");
     }
 
-    char* nome;
+    char nome[100];
     char* identificacao;
-    int op;
+    int op = 2;
+    int a = 0;
     while(1){
-        printf("Deseja fazer um novo diretorio ou um novo arquivo? (1 - diretorio|2 - arquivo): ");
-        scanf("%d", &op);
-
-        if(op == 1){
-            identificacao = "D";
-        }else if (op == 2){
-            identificacao = "A";
+        if(a == 0){
+            printf("Digite o nome do diretorio: ");
+            gets(nome);
+            b = cria_novo_diretorio(fileSistem, fileSistem->Bloco, nome);
+            print_D(fileSistem->Bloco);
+            a++;
         }else{
-            printf("Erro, opcao invalida!");
-            op = 3;
+            printf("Digite o nome do diretorio: ");
+            gets(nome);
+            b = cria_novo_diretorio(fileSistem, b, nome);
+            print_D(fileSistem->Bloco);
         }
-        if(op != 3){
-            printf("Digite o nome do diretorio/arquivo que quer fazer: ");
-            scanf("%s", &nome);
-
-            //cria_novo_bloco(fileSistem, nome, identificacao);
-        }
+        //print_D(b);
     }
-
 };

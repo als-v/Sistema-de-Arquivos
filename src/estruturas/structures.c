@@ -49,7 +49,7 @@ void print_SP(struct superBloco* b){
 /* Funcao que inicia o bloco root */
 struct Bloco* start_bloco(FILE* file){
     struct Bloco* b = (struct Bloco*) malloc(sizeof(struct Bloco));
-    char* nome = "/";
+    char* nome = "/dsc";
     char* identificacao = "D";
 
     b->nome = nome;
@@ -69,6 +69,7 @@ void print_D(struct Bloco* b){
     aux = b->subdiretorios;
     while(aux != NULL){
         print_D(aux);
+        aux = aux->subdiretorios;
     }
 };
 
@@ -90,6 +91,8 @@ struct fileSistem* start_file_sistem(FILE* file){
         fileSistem->superBloco->blocos_livres--;
         print_SP(fileSistem->superBloco);
     }
+
+    return fileSistem;
 };
 
 #endif
