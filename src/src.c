@@ -16,18 +16,10 @@ void start(FILE* file){
     int op = 2;
     int a = 0;
     while(1){
-        if(a == 0){
-            printf("Digite o nome do diretorio: ");
-            gets(nome);
-            b = cria_novo_diretorio(fileSistem, fileSistem->Bloco, nome);
-            print_D(fileSistem->Bloco);
-            a++;
-        }else{
-            printf("Digite o nome do diretorio: ");
-            gets(nome);
-            b = cria_novo_diretorio(fileSistem, b, nome);
-            print_D(fileSistem->Bloco);
-        }
+        printf("Digite o nome do diretorio: ");
+        gets(nome);
+        cria_novo_diretorio(fileSistem, fileSistem->Bloco, nome);
+        print_D(fileSistem->Bloco);
         //print_D(b);
     }
 };
