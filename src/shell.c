@@ -12,6 +12,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include "estruturas/structures.h"
 
 #define MAX_LINE 80 /* O comando de tamanho máximo */
 
@@ -101,6 +102,10 @@ int main(void) {
     int histIndex = 0; /* indice do histórico (vai de 0 a 9) */
     int should_run = 1; /* flag para determinar quando encerrar o programa */
     char str[MAX_LINE/2 + 1]; /* string que vai capturar a entrada do teclado ou o comando do histórico */
+
+    struct Bloco* path = (struct Bloco*) malloc(sizeof(struct Bloco));
+    strcpy(path->nome, "/dsc");
+    strcpy(path->identificacao, "D");
     
     while (should_run) {
         printf("osh>");

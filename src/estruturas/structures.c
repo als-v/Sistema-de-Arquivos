@@ -24,10 +24,23 @@ struct Bloco {
     struct Bloco* proxima_particao;     // contem o ponteiro das particoes
 };
 
+struct subdiretorios{
+    struct Bloco* blocos;
+    struct Bloco proximo;
+};
+
+struct fat {
+    int* id;
+};
+
+struct Memoria {
+    struct superBloco* superBloco;
+    struct Bloco* blocos;
+};
+
 /* Estrutura do Sistema de Arquivos */
 struct fileSistem {
-    struct superBloco* superBloco;
-    struct Bloco* Bloco;
+    struct Memoria* memoria;
 };
 
 /* Funcao que inicia o arquivo */
