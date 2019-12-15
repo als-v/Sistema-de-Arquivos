@@ -19,7 +19,7 @@ void add_diretorio(struct Bloco* diretorio, struct Bloco* novo_diretorio){
     }else{
         while(aux->prox != NULL){
             aux = aux->prox;
-        }        
+        }
         sub->ant = aux;
         aux->prox = sub;
     }
@@ -95,7 +95,7 @@ struct Bloco* exclui_diretorio(struct fileSistem* fileSistem, struct Bloco* dire
     struct Subdiretorio* sub = (struct Subdiretorio*) malloc(sizeof(struct Subdiretorio));
     sub = diretorio->diretorio_anterior->subdiretorios;
     
-    while(sub->prox != NULL){
+    while(sub != NULL){
         if(sub->diretorio == diretorio){
             if(sub->prox != NULL){
                 if(sub->ant != NULL){
