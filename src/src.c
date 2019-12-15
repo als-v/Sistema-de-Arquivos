@@ -15,11 +15,18 @@ void start(FILE* file){
     char* identificacao;
     int op = 2;
     int a = 0;
-    while(1){
-        printf("Digite o nome do diretorio: ");
-        gets(nome);
-        cria_novo_diretorio(fileSistem, fileSistem->Bloco, nome);
+    char dires[3][10] = {"Lanso", "a", "braba"};
+    int i = 0;
+    while(i < 3){
+        // printf("Digite o nome do diretorio: ");
+        // gets(nome);
+        cria_novo_diretorio(fileSistem, fileSistem->Bloco, dires[i]);
         print_D(fileSistem->Bloco);
         //print_D(b);
+        i++;
     }
+
+    //testando remoção
+    exclui_diretorio(fileSistem, fileSistem->Bloco->subdiretorios->prox->prox->diretorio);
+    print_D(fileSistem->Bloco);
 };

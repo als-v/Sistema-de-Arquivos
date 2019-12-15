@@ -158,8 +158,12 @@ void print_D(struct Bloco* b){
     if(aux == NULL){
         printf("Sem subdiretorios\n\n");
     }else{
-        printf("Subdiretorios:\n");
-        print_D(aux->diretorio);
+        while(aux != NULL){
+            printf("Subdiretorios:\n");
+            printf("Nome: %s\n     Identificacao: %s\n", aux->diretorio->nome, aux->diretorio->identificacao);
+            aux = aux->prox;
+        }
+        // print_D(aux->diretorio);
     }
 };
 

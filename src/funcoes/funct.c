@@ -6,30 +6,23 @@
 
 /* Funcao que atualiza o subdiretorio */
 void add_diretorio(struct Bloco* diretorio, struct Bloco* novo_diretorio){
-    struct Bloco* diretorio2 = diretorio;
-    struct Subdiretorio* aux = diretorio2->subdiretorios;
 
+    struct Subdiretorio* sub = (struct Subdiretorio*) malloc(sizeof(struct Subdiretorio));
+    sub->diretorio = novo_diretorio;
+    sub->prox = NULL;
+    sub->diretorio->diretorio_anterior = diretorio;
+    
+    struct Subdiretorio* aux = diretorio->subdiretorios;
     if (aux == NULL){
-        struct Subdiretorio* sub = (struct Subdiretorio*) malloc(sizeof(struct Subdiretorio));
-        sub->diretorio = novo_diretorio;
-        sub->prox = NULL;
         sub->ant = NULL;
-
-        diretorio2->subdiretorios = sub;
+        diretorio->subdiretorios = sub;
     }else{
-
         while(aux->prox != NULL){
             aux = aux->prox;
-        }
-        
-        struct Subdiretorio* sub = (struct Subdiretorio*) malloc(sizeof(struct Subdiretorio));
-        sub->diretorio = novo_diretorio;
-        sub->prox = NULL;
+        }        
         sub->ant = aux;
-
-        aux = sub;
+        aux->prox = sub;
     }
-    
 };
 
 /* Atualiza sistema de arquivos */
@@ -94,6 +87,36 @@ struct Bloco* cria_novo_diretorio(struct fileSistem* fileSistem, struct Bloco* d
     }else{
         printf("Erro na criacao de um novo diretorio/arquivo!\nO sistema nao possui mais espaco!\n");
         return NULL;
+    }
+};
+
+/* Funcao que exclui um diretorio */
+struct Bloco* exclui_diretorio(struct fileSistem* fileSistem, struct Bloco* diretorio){
+    struct Subdiretorio* sub = (struct Subdiretorio*) malloc(sizeof(struct Subdiretorio));
+    sub = diretorio->diretorio_anterior->subdiretorios;
+    
+    while(sub->prox != NULL){
+        if(sub->diretorio == diretorio){
+            if(sub->prox != NULL){
+                if(sub->ant != NULL){
+                    sub->ant->prox = sub->prox;
+                    sub->prox->ant = sub->ant;
+                } else{
+                    diretorio->diretorio_anterior->subdiretorios = sub->prox;
+                    sub->ant = NULL;
+                }
+            } else {
+                if(sub->ant != NULL){
+                    sub->ant->prox = NULL;
+                } else{
+                    diretorio->subdiretorios = NULL;
+                }
+            }
+            sub->ant = NULL;
+            sub->prox = NULL;
+            break;
+        }
+        sub = sub->prox;
     }
 };
 
