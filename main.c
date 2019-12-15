@@ -12,10 +12,11 @@
 int main(){
     FILE* arquivo;
     char* nome = "disc.dsc";
+    struct fileSistem* f;
 
     arquivo = fopen(nome, "wb");
 
-    start(arquivo);
+    f = start(arquivo);
 
     return(0);
 };

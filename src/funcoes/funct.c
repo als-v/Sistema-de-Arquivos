@@ -65,7 +65,7 @@ void update(struct fileSistem* f, struct Bloco* b){
 };
 
 /* Funcao que cria um novo diretorio */
-struct Bloco* cria_novo_diretorio(struct fileSistem* fileSistem, struct Bloco* diretorio, char* nome){
+void cria_novo_diretorio(struct fileSistem* fileSistem, struct Bloco* diretorio, char* nome){
     if(fileSistem->superBloco->blocos_livres > 0){
         // criando o novo bloco
         char* nome2 = (char*) malloc(sizeof(char));
@@ -86,7 +86,7 @@ struct Bloco* cria_novo_diretorio(struct fileSistem* fileSistem, struct Bloco* d
         //return novo_bloco;
     }else{
         printf("Erro na criacao de um novo diretorio/arquivo!\nO sistema nao possui mais espaco!\n");
-        return NULL;
+        //return NULL;
     }
 };
 

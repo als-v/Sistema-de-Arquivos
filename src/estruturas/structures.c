@@ -167,6 +167,32 @@ void print_D(struct Bloco* b){
     }
 };
 
+/* Procurar nome diretorio */
+int procurar_dir(char nome, struct Bloco* b){
+    struct Subdiretorio* aux = b->subdiretorios;
+
+    while(aux != NULL){
+    if (aux->diretorio->nome == &nome){
+        return 1;
+    }
+    aux = aux->prox;
+}
+    return 0;
+};
+
+/* Devolve diretorio*/
+struct Bloco* devolve_dir(char nome, struct Bloco* b){
+    struct Subdiretorio* aux = b->subdiretorios;
+
+    while(aux != NULL){
+    if (aux->diretorio->nome == &nome){
+        return aux->diretorio;
+    }
+    aux = aux->prox;
+}
+    return NULL;   
+};
+
 /* printar a memoria */
 void print_M(struct Armazenamento* m){
     struct Armazenamento* aux;

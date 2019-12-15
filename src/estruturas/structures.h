@@ -41,4 +41,10 @@ void print_F(struct fat* fat);
 /* Funcao inicializadora */
 struct fileSistem* start_file_sistem(FILE* file);
 
+/* Procurar nome diretorio */
+int procurar_dir(char nome, struct Bloco* b);
+
+/* Devolve diretorio*/
+struct Bloco* devolve_dir(char nome, struct Bloco* b);
+
 #endif

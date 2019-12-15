@@ -12,14 +12,21 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include "src.c"
 
 #define MAX_LINE 80 /* O comando de tamanho máximo */
+
+struct fileSistem* fileSistem;
 
 struct comando { /* armazena um comando e seu numero */
     char cmd[MAX_LINE/2 + 1];
     int numComando; 
 };
-    
+
+struct fileSistem* inicia_sistema_arquivos(FILE* arq){
+    return start(arq);
+}
+
 /* Função que executa o comando especificado pelo usuário */
 int execucao(char str[MAX_LINE/2 + 1], struct comando *historico, int* histIndex, int* numComando) {
     char *args[MAX_LINE/2 + 1]; /* argumentos de linha de comando */
@@ -67,12 +74,24 @@ int execucao(char str[MAX_LINE/2 + 1], struct comando *historico, int* histIndex
             teste[4] = '\0';
             if(!strcmp(teste, "/dsc")){
                 disco = 1; /* indica que se trata do disco simulado */
+                fileSistem->diretorio_atual = fileSistem->Bloco;
             }
         } 
         if(disco == 0){
             execvp(args[0], args); /* executa o comando no disco real */
         } else {
-            /** IMPLEMENTA OS COMANDOS PARA O DISCO SIMULADO **/
+            if (args[0] == "mkdir"){
+                cria_novo_diretorio(fileSistem, fileSistem->diretorio_atual, args[1]);
+            }
+            else if (args[0] == "cd"){
+                if (procurar_dir(args[1], fileSistem->diretorio_atual) == 1){
+                    fileSistem->diretorio_atual = devolve_dir(args[1], fileSistem->diretorio_atual);
+                }
+            }
+            else if (args[0] == "ls"){
+                print_D(fileSistem->diretorio_atual);
+            }
+
         }
 
     } else {
@@ -89,7 +108,12 @@ int main(void) {
     int histIndex = 0; /* indice do histórico (vai de 0 a 9) */
     int should_run = 1; /* flag para determinar quando encerrar o programa */
     char str[MAX_LINE/2 + 1]; /* string que vai capturar a entrada do teclado ou o comando do histórico */
-    
+
+    char* nome = "disc.dsc";
+    arquivo = fopen(nome, "wb");
+
+    fileSistem = inicia_sistema_arquivos(arquivo);
+
     while (should_run) {
         printf("osh>");
         fflush(stdout);
