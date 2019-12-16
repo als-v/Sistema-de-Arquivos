@@ -69,19 +69,29 @@ int execucao(char str[MAX_LINE/2 + 1], struct comando *historico, int* histIndex
     if(!pid) { /* se for o processo filho, executa o comando solicitado */
         int disco = 0; /* indica com qual disco está mexendo: 0 - real 1 - simulado */
         char teste[5];
+        char teste2[100];
+        char teste3[100];
+        int w, j;
+        w = j = 0;
         if(!strcmp(args[0], "mkdir")){
             strncpy(teste, args[1], 4);
             teste[4] = '\0';
             if(!strcmp(teste, "/dsc")){
+                strcpy(teste2, args[1]);
+                for(w = 4, j = 0; i < strlen(teste2); i++, j++){
+                    teste3[j] = teste2[i];
+                }
+                teste3[j+1] = '\0';
                 disco = 1; /* indica que se trata do disco simulado */
                 fileSistem->diretorio_atual = fileSistem->Bloco;
+                cria_novo_diretorio(fileSistem, fileSistem->diretorio_atual, teste3);
             }
         } 
         if(disco == 0){
             execvp(args[0], args); /* executa o comando no disco real */
         } else {
             if (args[0] == "mkdir"){
-                cria_novo_diretorio(fileSistem, fileSistem->diretorio_atual, args[1]);
+                
             }
             else if (args[0] == "cd"){
                 if (procurar_dir(args[1], fileSistem->diretorio_atual) == 1){

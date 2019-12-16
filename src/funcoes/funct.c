@@ -85,7 +85,33 @@ void cria_novo_diretorio(struct fileSistem* fileSistem, struct Bloco* diretorio,
 
         //return novo_bloco;
     }else{
-        printf("Erro na criacao de um novo diretorio/arquivo!\nO sistema nao possui mais espaco!\n");
+        printf("Erro na criacao de um novo diretorio!\nO sistema nao possui mais espaco!\n");
+        //return NULL;
+    }
+};
+
+/* Funcao que cria um novo arquivo */
+void cria_novo_arquivo(struct fileSistem* fileSistem, struct Bloco* arquivo, char* nome){
+    if(fileSistem->superBloco->blocos_livres > 0){
+        // criando o novo bloco
+        char* nome2 = (char*) malloc(sizeof(char));
+        nome2 = nome;
+        char* ID = "A";
+        struct Bloco* novo_bloco = (struct Bloco*) malloc(sizeof(struct Bloco));
+        novo_bloco->nome = nome2;
+        novo_bloco->identificacao = ID;
+        novo_bloco->subdiretorios = NULL;
+        novo_bloco->proxima_particao = NULL;
+
+        // atualizando o diretorio atual
+        add_diretorio(arquivo, novo_bloco);
+
+        // atualiza fat/memoria
+        update(fileSistem, novo_bloco);
+
+        //return novo_bloco;
+    }else{
+        printf("Erro na criacao de um novo arquivo!\nO sistema nao possui mais espaco!\n");
         //return NULL;
     }
 };
