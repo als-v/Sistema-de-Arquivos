@@ -86,25 +86,17 @@ int execucao(char str[MAX_LINE/2 + 1], struct comando *historico, int* histIndex
                 fileSistem->diretorio_atual = fileSistem->Bloco;
                 cria_novo_diretorio(fileSistem, fileSistem->diretorio_atual, teste3);
             }
-        } 
+        }else if (!strcmp(args[0], "cd")){
+            if(procurar_dir(args[1], fileSistem->diretorio_atual) == 1){
+                fileSistem->diretorio_atual = devolve_dir(args[1], fileSistem->diretorio_atual);
+            }
+        }else if (!strcmp(args[0], "ls")){
+            print_D(fileSistem->diretorio_atual);
+        }
         if(disco == 0){
             execvp(args[0], args); /* executa o comando no disco real */
-        } else {
-            if (args[0] == "mkdir"){
-                
-            }
-            else if (args[0] == "cd"){
-                if (procurar_dir(args[1], fileSistem->diretorio_atual) == 1){
-                    fileSistem->diretorio_atual = devolve_dir(args[1], fileSistem->diretorio_atual);
-                }
-            }
-            else if (args[0] == "ls"){
-                print_D(fileSistem->diretorio_atual);
-            }
-
         }
-
-    } else {
+    }else{
         if (espera) {
             wait(NULL); /* Os processos serão executados concorrentemente */
         }
