@@ -168,11 +168,11 @@ void print_D(struct Bloco* b){
 };
 
 /* Procurar nome diretorio */
-int procurar_dir(char nome, struct Bloco* b){
+int procurar_dir(char* nome, struct Bloco* b){
     struct Subdiretorio* aux = b->subdiretorios;
 
     while(aux != NULL){
-    if (aux->diretorio->nome == &nome){
+    if (!strcmp(aux->diretorio->nome, nome)){
         return 1;
     }
     aux = aux->prox;
@@ -181,11 +181,11 @@ int procurar_dir(char nome, struct Bloco* b){
 };
 
 /* Devolve diretorio*/
-struct Bloco* devolve_dir(char nome, struct Bloco* b){
+struct Bloco* devolve_dir(char* nome, struct Bloco* b){
     struct Subdiretorio* aux = b->subdiretorios;
 
     while(aux != NULL){
-    if (aux->diretorio->nome == &nome){
+    if (!strcmp(aux->diretorio->nome, nome)){
         return aux->diretorio;
     }
     aux = aux->prox;

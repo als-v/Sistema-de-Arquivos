@@ -69,28 +69,36 @@ int execucao(char str[MAX_LINE/2 + 1], struct comando *historico, int* histIndex
     if(!pid) { /* se for o processo filho, executa o comando solicitado */
         int disco = 0; /* indica com qual disco está mexendo: 0 - real 1 - simulado */
         char teste[5];
-        char teste2[100];
-        char teste3[100];
+        char teste1[100] = {0};
         int w, j;
         w = j = 0;
         if(!strcmp(args[0], "mkdir")){
-            strncpy(teste, args[1], 4);
+            strncpy(teste, args[1], 3);
             teste[4] = '\0';
-            if(!strcmp(teste, "/dsc")){
-                strcpy(teste2, args[1]);
-                for(w = 4, j = 0; i < strlen(teste2); i++, j++){
-                    teste3[j] = teste2[i];
-                }
-                teste3[j+1] = '\0';
+            if(!strcmp(teste, "dsc")){
                 disco = 1; /* indica que se trata do disco simulado */
+                memcpy(teste1, &args[1][4], strlen(args[1])-3);
+                printf("esse %s\n", teste1);
                 fileSistem->diretorio_atual = fileSistem->Bloco;
-                cria_novo_diretorio(fileSistem, fileSistem->diretorio_atual, teste3);
+                cria_novo_diretorio(fileSistem, fileSistem->diretorio_atual, teste1);
             }
-        }else if (!strcmp(args[0], "cd")){
-            if(procurar_dir(args[1], fileSistem->diretorio_atual) == 1){
-                fileSistem->diretorio_atual = devolve_dir(args[1], fileSistem->diretorio_atual);
+        } else if (!strcmp(args[0], "cd")){
+            strncpy(teste, args[1], 3);
+            teste[4] = '\0';
+            if(!strcmp(teste, "dsc")){
+                disco = 1; /* indica que se trata do disco simulado */
+                for(w = 4, j = 0; w < strlen(args[1]); w++, j++){
+                    teste1[j] = args[1][w];
+                }
+                teste1[j] = '\0';
+                if(procurar_dir(args[1], fileSistem->diretorio_atual) == 1){
+                    fileSistem->diretorio_atual = devolve_dir(args[1], fileSistem->diretorio_atual);
+                }
             }
-        }else if (!strcmp(args[0], "ls")){
+        } else if (!strcmp(args[0], "ls")){
+            strncpy(teste, args[1], 3);
+            teste[4] = '\0';
+
             print_D(fileSistem->diretorio_atual);
         }
         if(disco == 0){
@@ -112,11 +120,12 @@ int main(void) {
     char str[MAX_LINE/2 + 1]; /* string que vai capturar a entrada do teclado ou o comando do histórico */
 
     char* nome = "disc.dsc";
-    arquivo = fopen(nome, "wb");
+    FILE* arquivo = fopen(nome, "wb");
 
     fileSistem = inicia_sistema_arquivos(arquivo);
 
     while (should_run) {
+        print_D(fileSistem->diretorio_atual);
         printf("osh>");
         fflush(stdout);
         
